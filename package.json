@@ -13,7 +13,8 @@
   "dependencies": {
     "dotenv": "^16.0.0",
     "koa": "^2.13.4",
-    "koa-router": "^10.1.1"
+    "koa-router": "^10.1.1",
+    "mongoose": "^6.3.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.16"
