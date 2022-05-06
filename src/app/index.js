@@ -1,5 +1,7 @@
 const Koa = require('koa')
 const KoaBody = require('koa-body')
+const KoaJwt = require('koa-jwt')
+
 // 导入路由
 const userRouter = require('../router/user.route')
 
@@ -10,6 +12,12 @@ MongoConnect()
 
 const app = new Koa()
 app.use(KoaBody())
+
+app.use(
+  KoaJwt({ secret: 'imooc-api' }).unless({
+    path: [/\/sys\/login/, /\/sys\/register/],
+  }),
+)
 
 app.use(userRouter.routes())
 

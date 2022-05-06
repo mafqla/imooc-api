@@ -3,12 +3,12 @@ const { User } = require('../model/index')
 // 导入 bcryptjs 这个包
 const bcrypt = require('bcryptjs')
 
-const register = async ctx => {
+const register = async (ctx) => {
   let { username, password } = ctx.request.body
   let isDouble = false
 
-  await User.findOne({ username }).then(async (rel) => {
-    if (rel) isDouble = true
+  await User.findOne({ username }).then(async (result) => {
+    if (result) isDouble = true
   })
   if (isDouble) {
     ctx.body = {
@@ -19,8 +19,8 @@ const register = async ctx => {
   }
   password = bcrypt.hashSync(password, 10)
   await User.create({ username, password })
-    .then(async (rel) => {
-      if (rel) {
+    .then(async result => {
+      if (result) {
         ctx.body = {
           success: true,
           code: 200,
@@ -45,28 +45,32 @@ const register = async ctx => {
 }
 const login = async (ctx) => {
   let { username, password } = ctx.request.body
+  // const isPasswordValid = bcrypt.compareSync(password, User.password)
+  
   await User.findOne({ username, password })
-    .then(async (rel) => {
-      if (rel) {
+    .then(async result => {
+      if (result) {
         let token = jwt.sign(
           {
-            username: rel.username,
-            _id: rel._id,
+            username: result.username,
+            _id: result._id,
           },
-          'secret',
+          'imooc-api',
           { expiresIn: 3600 * 24 * 7 },
         )
         ctx.body = {
           success: true,
           code: 200,
-          data: token,
+          data: {
+            token: token
+          },
           message: '登录成功',
         }
       } else {
         ctx.body = {
           success: false,
           code: 300,
-          message: '登录失败',
+          message: '用户名或密码错误',
         }
       }
     })
@@ -79,4 +83,47 @@ const login = async (ctx) => {
       }
     })
 }
-module.exports = { register, login }
+
+/**
+ * @description: 验证用户登录
+ */
+const verify = async (ctx) => {
+  let token = ctx.header.authorization
+  token = token.respace('Bearer ', '')
+
+  try {
+    let result = jwt.verify(token, 'imooc-api')
+    await User.findOne({ _id: result._id })
+      .then(async (result) => {
+        if (result) {
+          ctx.body = {
+            success: true,
+            code: 200,
+            data: result,
+            message: '用户认证成功',
+          }
+        } else {
+          ctx.body = {
+            success: false,
+            code: 500,
+            message: '用户认证失败',
+          }
+        }
+      })
+      .catch((err) => {
+        ctx.body = {
+          success: false,
+          code: 500,
+          message: '用户认证失败',
+        }
+      })
+  } catch (err) {
+    ctx.body = {
+      success: false,
+      code: 500,
+      message: '用户认证失败',
+    }
+  }
+}
+
+module.exports = { register, login, verify }
