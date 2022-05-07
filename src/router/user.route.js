@@ -1,6 +1,11 @@
 const Router = require('koa-router')
 
-const { register, login, verify } = require('../controller/user.controller')
+const {
+  register,
+  login,
+  verify,
+  profile,
+} = require('../controller/user.controller')
 
 const router = new Router({ prefix: '/sys' })
 
@@ -12,5 +17,8 @@ router.post('/login', login)
 
 // 登录验证
 router.post('/verify', verify)
+
+//查询用户信息接口
+router.get('/profile', profile)
 
 module.exports = router

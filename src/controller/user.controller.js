@@ -19,7 +19,7 @@ const register = async (ctx) => {
   }
   password = bcrypt.hashSync(password, 10)
   await User.create({ username, password })
-    .then(async result => {
+    .then(async (result) => {
       if (result) {
         ctx.body = {
           success: true,
@@ -46,9 +46,9 @@ const register = async (ctx) => {
 const login = async (ctx) => {
   let { username, password } = ctx.request.body
   // const isPasswordValid = bcrypt.compareSync(password, User.password)
-  
+
   await User.findOne({ username, password })
-    .then(async result => {
+    .then(async (result) => {
       if (result) {
         let token = jwt.sign(
           {
@@ -62,7 +62,7 @@ const login = async (ctx) => {
           success: true,
           code: 200,
           data: {
-            token: token
+            token: token,
           },
           message: '登录成功',
         }
@@ -78,7 +78,7 @@ const login = async (ctx) => {
       ctx.body = {
         success: false,
         code: 500,
-        message: '登录出现异常',
+        message: '注册异常',
         err: err.message,
       }
     })
@@ -126,4 +126,16 @@ const verify = async (ctx) => {
   }
 }
 
-module.exports = { register, login, verify }
+//获取用户信息
+const profile = async (ctx) => {
+  await User.find().then((result) => {
+    ctx.body = {
+      success: true,
+      code: 200,
+      data: result,
+      message: '获取用户信息成功',
+    }
+  })
+}
+
+module.exports = { register, login, verify, profile }
