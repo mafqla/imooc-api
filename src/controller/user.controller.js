@@ -133,7 +133,7 @@ const profile = async (ctx) => {
       success: true,
       code: 200,
       data: result,
-      message: '获取用户信息成功',
+      message: '获取用户信息成功！',
     }
   })
 }
