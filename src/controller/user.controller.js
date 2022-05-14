@@ -44,19 +44,25 @@ const register = async (ctx) => {
     })
 }
 const login = async (ctx) => {
-  let { username, password } = ctx.request.body
+  const { username, password } = ctx.request.body
   // const isPasswordValid = bcrypt.compareSync(password, User.password)
 
-  await User.findOne({ username, password })
-    .then(async (result) => {
-      if (result) {
-        let token = jwt.sign(
-          {
-            username: result.username,
-            _id: result._id,
-          },
+  await User.findOne({ username }).then(async (result) => {
+    if (!result) {
+      ctx.body = {
+        success: false,
+        code: 300,
+        message: '用户不存在',
+      }
+    } else {
+      // console.log(result.username)
+      // 密码验证
+      const isPasswordValid = bcrypt.compareSync(password, result.password)
+      // console.log(isPasswordValid)
+      if (isPasswordValid) {
+        const token = jwt.sign(
+          { username: result.username, id: result.id },
           'imooc-api',
-          { expiresIn: 3600 * 24 * 7 },
         )
         ctx.body = {
           success: true,
@@ -70,60 +76,11 @@ const login = async (ctx) => {
         ctx.body = {
           success: false,
           code: 300,
-          message: '用户名或密码错误',
+          message: '密码错误',
         }
       }
-    })
-    .catch((err) => {
-      ctx.body = {
-        success: false,
-        code: 500,
-        message: '注册异常',
-        err: err.message,
-      }
-    })
-}
-
-/**
- * @description: 验证用户登录
- */
-const verify = async (ctx) => {
-  let token = ctx.header.authorization
-  token = token.respace('Bearer ', '')
-
-  try {
-    let result = jwt.verify(token, 'imooc-api')
-    await User.findOne({ _id: result._id })
-      .then(async (result) => {
-        if (result) {
-          ctx.body = {
-            success: true,
-            code: 200,
-            data: result,
-            message: '用户认证成功',
-          }
-        } else {
-          ctx.body = {
-            success: false,
-            code: 500,
-            message: '用户认证失败',
-          }
-        }
-      })
-      .catch((err) => {
-        ctx.body = {
-          success: false,
-          code: 500,
-          message: '用户认证失败',
-        }
-      })
-  } catch (err) {
-    ctx.body = {
-      success: false,
-      code: 500,
-      message: '用户认证失败',
     }
-  }
+  })
 }
 
 //获取用户信息
@@ -138,4 +95,4 @@ const profile = async (ctx) => {
   })
 }
 
-module.exports = { register, login, verify, profile }
+module.exports = { register, login, profile }
