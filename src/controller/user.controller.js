@@ -122,15 +122,30 @@ const profile = async (ctx) => {
 // 获取权限列表
 const getPermission = async (ctx) => {  
   await Permission.find().then(async (permission) => {
+    // console.log(permission)
+    const data = permission
     ctx.body = {
       success: true,
       code: 200,
-      data: {
-        permission,
-      },
+      data,
       message: '获取权限列表成功！',
     }
   })
 }
 
-module.exports = { register, login, profile, getPermission }
+// 获取角色列表
+const getRole = async (ctx) => {
+  await Role.find().then(async (role) => {
+    // console.log(role)
+    const data = role
+    ctx.body = {
+      success: true,
+      code: 200,
+      data,
+      message: '获取角色列表成功！',
+    }
+  })
+}
+
+
+module.exports = { register, login, profile, getPermission, getRole }
