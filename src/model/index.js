@@ -25,8 +25,17 @@ const roleSchema = new mongoose.Schema(
   { versionKey: false },
 )
 
-const Role = mongoose.model('Role',  roleSchema, 'role')
+const Role = mongoose.model('Role', roleSchema, 'role')
 
+const permissionSchema = new mongoose.Schema(
+  {
+    id: Number,
+    permissionName: String,
+    premissionMark: String,
+    premissionDescr: String,
+  }
+)
+const Permission = mongoose.model('Permission', permissionSchema, 'permission')
 module.exports = {
-  User,Role
+  User,Role,Permission
 }

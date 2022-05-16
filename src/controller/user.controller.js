@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const { User, Role } = require('../model/index')
+const { User, Role,Permission } = require('../model/index')
 // 导入 bcryptjs 这个包
 const bcrypt = require('bcryptjs')
 
@@ -109,7 +109,7 @@ const profile = async (ctx) => {
           _id: result._id,
           id: result.id,
           username: result.username,
-          // title: role.title,
+          title: role.title,
           avtar: result.avatar,
           // permission,
         },
@@ -119,4 +119,18 @@ const profile = async (ctx) => {
   })
 }
 
-module.exports = { register, login, profile }
+// 获取权限列表
+const getPermission = async (ctx) => {  
+  await Permission.find().then(async (permission) => {
+    ctx.body = {
+      success: true,
+      code: 200,
+      data: {
+        permission,
+      },
+      message: '获取权限列表成功！',
+    }
+  })
+}
+
+module.exports = { register, login, profile, getPermission }
