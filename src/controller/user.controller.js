@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const { User, Role,Permission } = require('../model/index')
+const { User, Role, Permission, UserPermission } = require('../model/index')
 // 导入 bcryptjs 这个包
 const bcrypt = require('bcryptjs')
 
@@ -98,6 +98,34 @@ const profile = async (ctx) => {
     // console.log(result)
     const roleId = result.roleId
     await Role.findOne({ roleId }).then(async (role) => {
+      const userPermission = await UserPermission.findOne({ id: role.id })
+      let permissionid = userPermission.data
+      // console.log(permissionid)
+      let pointsid = []
+      let menusid = []
+      for (let i in permissionid) {
+        // console.log(permissionid[i])
+        let test = /[1-9]-[1-9]/.test(permissionid[i])
+        // console.log(test)
+        if (test) {
+          pointsid.push(permissionid[i])
+        } else {
+          menusid.push(permissionid[i])
+        }
+      }
+      const pointsData = await Permission.find({ id: pointsid })
+      const permission = await Permission.find({ id: menusid })
+
+      let points = []
+      let menus = []
+      for (let i in pointsData) {
+        points.push(pointsData[i].permissionMark)
+      }
+      for (let i in permission) {
+        menus.push(permission[i].permissionMark)
+      }
+      // console.log("points:",points,"menus:",menus)
+
       ctx.body = {
         success: true,
         code: 200,
@@ -110,8 +138,11 @@ const profile = async (ctx) => {
           id: result.id,
           username: result.username,
           title: role.title,
-          avtar: result.avatar,
-          // permission,
+          avatar: result.avatar,
+          permission: {
+            points,
+            menus,
+          },
         },
         message: '获取用户信息成功！',
       }
@@ -120,7 +151,7 @@ const profile = async (ctx) => {
 }
 
 // 获取权限列表
-const getPermission = async (ctx) => {  
+const getPermission = async (ctx) => {
   await Permission.find().then(async (permission) => {
     // console.log(permission)
     const data = permission
@@ -146,6 +177,5 @@ const getRole = async (ctx) => {
     }
   })
 }
-
 
 module.exports = { register, login, profile, getPermission, getRole }
