@@ -1,5 +1,11 @@
 const jwt = require('jsonwebtoken')
-const { User, Role, Permission, UserPermission } = require('../model/index')
+const {
+  User,
+  Role,
+  Permission,
+  UserPermission,
+  Feature,
+} = require('../model/index')
 // 导入 bcryptjs 这个包
 const bcrypt = require('bcryptjs')
 
@@ -178,4 +184,25 @@ const getRole = async (ctx) => {
   })
 }
 
-module.exports = { register, login, profile, getPermission, getRole }
+// 获取feature列表
+const getFeature = async (ctx) => {
+  await Feature.find().then(async (feature) => {
+    // console.log(feature)
+    const data = feature
+    ctx.body = {
+      success: true,
+      code: 200,
+      data,
+      message: '获取feature列表成功！',
+    }
+  })
+}
+
+module.exports = {
+  register,
+  login,
+  profile,
+  getPermission,
+  getRole,
+  getFeature,
+}

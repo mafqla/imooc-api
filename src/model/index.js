@@ -61,7 +61,20 @@ const UserPermission = mongoose.model(
   'userpermission',
 )
 
+// feature api 接口
+const featureSchema = new mongoose.Schema({
+  _id: {
+    type: [{ type: String }],
+    select: false,
+  },
+  id: Number,
+  title: String,
+  title: String,
+  percentage: Number,
+  content: String,
 
+})
+const Feature = mongoose.model('Feature', featureSchema, 'feature')
 
 
 module.exports = {
@@ -69,4 +82,5 @@ module.exports = {
   Role,
   Permission,
   UserPermission,
+  Feature,
 }
