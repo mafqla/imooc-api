@@ -5,6 +5,7 @@ const {
   Permission,
   UserPermission,
   Feature,
+  Chapter,
 } = require('../model/index')
 // 导入 bcryptjs 这个包
 const bcrypt = require('bcryptjs')
@@ -198,6 +199,21 @@ const getFeature = async (ctx) => {
   })
 }
 
+// 获取chapter列表
+const getChapter = async (ctx) => {
+  await Chapter.find().then(async (chapter) => {
+    // console.log(chapter)
+    const data = chapter
+    ctx.body = {
+      success: true,
+      code: 200,
+      data,
+      message: '获取chapter列表成功！',
+    }
+  })
+}
+
+
 module.exports = {
   register,
   login,
@@ -205,4 +221,5 @@ module.exports = {
   getPermission,
   getRole,
   getFeature,
+  getChapter,
 }

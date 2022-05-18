@@ -44,7 +44,11 @@ const permissionSchema = new mongoose.Schema({
   permissionMark: String,
   permissionDesc: String,
 })
-const Permission = mongoose.model('Permissionl', permissionSchema, 'permissionlist')
+const Permission = mongoose.model(
+  'Permissionl',
+  permissionSchema,
+  'permissionlist',
+)
 
 // 用户权限
 const userPermissionSchema = new mongoose.Schema({
@@ -72,15 +76,26 @@ const featureSchema = new mongoose.Schema({
   title: String,
   percentage: Number,
   content: String,
-
 })
 const Feature = mongoose.model('Feature', featureSchema, 'feature')
 
+// chapter api 接口
+const chapterSchema = new mongoose.Schema({
+  _id: {
+    type: [{ type: String }],
+    select: false,
+  },
+  id: Number,
+  content: String,
+  timestamp: String,
+})
 
+const Chapter = mongoose.model('Chapter', chapterSchema, 'chapter')
 module.exports = {
   User,
   Role,
   Permission,
   UserPermission,
   Feature,
+  Chapter,
 }

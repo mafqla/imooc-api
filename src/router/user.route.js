@@ -7,6 +7,7 @@ const {
   getPermission,
   getRole,
   getFeature,
+  getChapter,
 } = require('../controller/user.controller')
 
 const router = new Router({ prefix: '/api' })
@@ -28,4 +29,7 @@ router.get('/role/list', getRole)
 
 // 获取feature列表
 router.get('/user/feature', getFeature)
+
+// 获取chapter列表
+router.get('/user/chapter', getChapter)
 module.exports = router
