@@ -157,6 +157,50 @@ const profile = async (ctx) => {
   })
 }
 
+// 获取用户列表
+const getUserList = async (ctx) => {
+  let page = parseInt(ctx.query.page)
+  let size = parseInt(ctx.query.size)
+  const total = await User.find().count()
+  const listResult = await User.find()
+    .limit(size)
+    .skip((page - 1) * size)
+
+  // console.log(listResult)
+  const list = []
+  for (let i in listResult) {
+    const roleId = listResult[i].roleId
+    const roleData = await Role.find()
+    // console.log(roleData)
+    const role = []
+    for (let j in roleData) {
+      if (roleData[j].id === roleId) {
+        role.push({ id: roleData[j].id, title: roleData[j].title })
+      }
+    }
+    list.push({
+      role: role,
+      _id: listResult[i]._id,
+      id: listResult[i].id,
+      username: listResult[i].username,
+      openTime: listResult[i].openTime,
+      mobile: listResult[i].mobile,
+      avatar: listResult[i].avatar,
+    })
+  }
+
+  ctx.body = {
+    success: true,
+    code: 200,
+    data: {
+      list: list,
+      total,
+      page,
+      size,
+    },
+  }
+}
+
 // 获取权限列表
 const getPermission = async (ctx) => {
   await Permission.find().then(async (permission) => {
@@ -213,7 +257,6 @@ const getChapter = async (ctx) => {
   })
 }
 
-
 module.exports = {
   register,
   login,
@@ -222,4 +265,5 @@ module.exports = {
   getRole,
   getFeature,
   getChapter,
+  getUserList,
 }
