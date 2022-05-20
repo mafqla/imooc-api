@@ -35,6 +35,18 @@ const getArticleList = async (ctx) => {
   }
 }
 
+// 查看文章详细
+const getArticleDetail = async (ctx) => {
+  const id = ctx.query.id
+  const article = await Article.findOne(id)
+  ctx.body = {
+    success: true,
+    code: 200,
+    data: article,
+  }
+}
+
 module.exports = {
   getArticleList,
+  getArticleDetail,
 }
