@@ -91,6 +91,19 @@ const chapterSchema = new mongoose.Schema({
 })
 
 const Chapter = mongoose.model('Chapter', chapterSchema, 'chapter')
+
+// 文章
+const articleSchema = new mongoose.Schema({
+  _id: String,
+  ranking: String,
+  title: String,
+  author: String,
+  publicDate: String,
+  desc: String,
+  content: String,
+})
+
+const Article = mongoose.model('Article', articleSchema, 'article')
 module.exports = {
   User,
   Role,
@@ -98,4 +111,5 @@ module.exports = {
   UserPermission,
   Feature,
   Chapter,
+  Article,
 }

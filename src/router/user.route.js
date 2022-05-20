@@ -11,7 +11,7 @@ const {
   getUserList,
 } = require('../controller/user.controller')
 
-const router = new Router({ prefix: '/api' })
+const router = new Router()
 
 // 注册接口
 router.post('/sys/register', register)

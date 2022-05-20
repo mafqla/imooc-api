@@ -3,8 +3,7 @@ const KoaBody = require('koa-body')
 const KoaJwt = require('koa-jwt')
 
 // 导入路由
-const userRouter = require('../router/user.route')
-
+const indexRouter = require('../router/index')
 // 连接数据库
 const MongoConnect = require('../db')
 
@@ -19,6 +18,6 @@ app.use(
   }),
 )
 
-app.use(userRouter.routes())
+app.use(indexRouter.routes())
 
 module.exports = app
