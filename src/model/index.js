@@ -94,7 +94,7 @@ const Chapter = mongoose.model('Chapter', chapterSchema, 'chapter')
 
 // 文章
 const articleSchema = new mongoose.Schema({
-  _id: String,
+  _id: Object,
   ranking: String,
   title: String,
   author: String,
@@ -104,6 +104,7 @@ const articleSchema = new mongoose.Schema({
 })
 
 const Article = mongoose.model('Article', articleSchema, 'article')
+
 module.exports = {
   User,
   Role,

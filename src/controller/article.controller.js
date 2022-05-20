@@ -1,4 +1,5 @@
 const { Article } = require('../model/index')
+const mongoose = require('mongoose')
 
 // 文章列表
 const getArticleList = async (ctx) => {
@@ -34,11 +35,11 @@ const getArticleList = async (ctx) => {
     },
   }
 }
-
 // 查看文章详细
 const getArticleDetail = async (ctx) => {
-  const id = ctx.query.id
-  const article = await Article.findOne(id)
+  const { id } = ctx.params
+  const OId = mongoose.Types.ObjectId(id)
+  const article = await Article.findOne({ _id:  OId  })
   ctx.body = {
     success: true,
     code: 200,
