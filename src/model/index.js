@@ -24,7 +24,7 @@ const roleSchema = new mongoose.Schema(
       type: [{ type: String }],
       select: false,
     },
-    id: Number,
+    id: String,
     title: String,
     describe: String,
   },

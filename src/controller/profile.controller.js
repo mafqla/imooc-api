@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken')
+// 导入 bcryptjs 这个包
+const bcrypt = require('bcryptjs')
 const {
   User,
   Role,
@@ -7,49 +9,6 @@ const {
   Feature,
   Chapter,
 } = require('../model/index')
-// 导入 bcryptjs 这个包
-const bcrypt = require('bcryptjs')
-
-const register = async (ctx) => {
-  let { username, password } = ctx.request.body
-  let isDouble = false
-
-  await User.findOne({ username }).then(async (result) => {
-    if (result) isDouble = true
-  })
-  if (isDouble) {
-    ctx.body = {
-      code: 300,
-      message: '用户名已存在',
-    }
-    return
-  }
-  password = bcrypt.hashSync(password, 10)
-  await User.create({ username, password })
-    .then(async (result) => {
-      if (result) {
-        ctx.body = {
-          success: true,
-          code: 200,
-          message: '注册成功',
-        }
-      } else {
-        ctx.body = {
-          success: false,
-          code: 300,
-          message: '注册失败',
-        }
-      }
-    })
-    .catch((err) => {
-      ctx.body = {
-        success: false,
-        code: 500,
-        message: '注册出现异常',
-        err: err.message,
-      }
-    })
-}
 
 const login = async (ctx) => {
   const { username, password } = ctx.request.body
@@ -63,7 +22,7 @@ const login = async (ctx) => {
           message: '用户不存在',
         }
       } else {
-        console.log(result.username)
+        // console.log(result.username)
         // 密码验证
         const isPasswordValid = bcrypt.compareSync(password, result.password)
         // console.log(isPasswordValid)
@@ -125,7 +84,6 @@ const profile = async (ctx) => {
       // console.log(pointsData[0].children)
       const pointslist = []
       for (let i in pointsid) {
-
         for (let j in pointsData[i].children) {
           pointslist.push(pointsData[i].children[j])
         }
@@ -170,100 +128,6 @@ const profile = async (ctx) => {
   })
 }
 
-// 获取用户列表
-const getUserList = async (ctx) => {
-  let page = parseInt(ctx.query.page)
-  let size = parseInt(ctx.query.size)
-  const total = await User.find().count()
-  const listResult = await User.find()
-    .limit(size)
-    .skip((page - 1) * size)
-
-  // console.log(listResult)
-  const list = []
-  for (let i in listResult) {
-    const roleId = listResult[i].roleId
-    const roleData = await Role.find()
-    // console.log(roleData)
-    const role = []
-    for (let j in roleData) {
-      if (roleData[j].id === roleId) {
-        role.push({ id: roleData[j].id, title: roleData[j].title })
-      }
-    }
-    list.push({
-      role: role,
-      _id: listResult[i]._id,
-      id: listResult[i].id,
-      username: listResult[i].username,
-      openTime: listResult[i].openTime,
-      mobile: listResult[i].mobile,
-      avatar: listResult[i].avatar,
-    })
-  }
-
-  ctx.body = {
-    success: true,
-    code: 200,
-    data: {
-      list: list,
-      total,
-      page,
-      size,
-    },
-  }
-}
-
-// 获取权限列表
-const getPermission = async (ctx) => {
-  await Permission.find().then(async (permission) => {
-    // console.log(permission)
-    const data = permission
-    ctx.body = {
-      success: true,
-      code: 200,
-      data,
-      message: '获取权限列表成功！',
-    }
-  })
-}
-
-// 获取角色列表
-const getRole = async (ctx) => {
-  await Role.find().then(async (role) => {
-    // console.log(role)
-    const data = role
-    ctx.body = {
-      success: true,
-      code: 200,
-      data,
-      message: '获取角色列表成功！',
-    }
-  })
-}
-
-// 获取指定用户的权限
-const getUserPermission = async (ctx) => {
-  const { id } = ctx.params
-  await UserPermission.findOne({ id })
-    .then(async (userPermission) => {
-      ctx.body = {
-        success: true,
-        code: 200,
-        data: userPermission.data,
-        message: '获取指定用户的权限成功！',
-      }
-    })
-    .catch((err) => {
-      ctx.body = {
-        success: false,
-        code: 500,
-        message: '获取指定用户的权限失败！',
-        err: err.message,
-      }
-    })
-}
-
 // 获取feature列表
 const getFeature = async (ctx) => {
   await Feature.find().then(async (feature) => {
@@ -293,13 +157,8 @@ const getChapter = async (ctx) => {
 }
 
 module.exports = {
-  register,
   login,
   profile,
-  getPermission,
-  getRole,
   getFeature,
   getChapter,
-  getUserList,
-  getUserPermission,
 }
