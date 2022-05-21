@@ -120,14 +120,27 @@ const profile = async (ctx) => {
           menusid.push(permissionid[i])
         }
       }
-      const pointsData = await Permission.find({ id: pointsid })
+      // console.log(pointsid)
+      const pointsData = await Permission.find().select('children')
+      // console.log(pointsData[0].children)
+      const pointslist = []
+      for (let i in pointsid) {
+
+        for (let j in pointsData[i].children) {
+          pointslist.push(pointsData[i].children[j])
+        }
+      }
+      // console.log(pointslist)
+
       const permission = await Permission.find({ id: menusid })
 
       let points = []
       let menus = []
-      for (let i in pointsData) {
-        points.push(pointsData[i].permissionMark)
+
+      for (let i in pointslist) {
+        points.push(pointslist[i].permissionMark)
       }
+      // console.log(points)
       for (let i in permission) {
         menus.push(permission[i].permissionMark)
       }
@@ -147,8 +160,8 @@ const profile = async (ctx) => {
           title: role.title,
           avatar: result.avatar,
           permission: {
-            points,
             menus,
+            points,
           },
         },
         message: '获取用户信息成功！',
@@ -229,6 +242,28 @@ const getRole = async (ctx) => {
   })
 }
 
+// 获取指定用户的权限
+const getUserPermission = async (ctx) => {
+  const { id } = ctx.params
+  await UserPermission.findOne({ id })
+    .then(async (userPermission) => {
+      ctx.body = {
+        success: true,
+        code: 200,
+        data: userPermission.data,
+        message: '获取指定用户的权限成功！',
+      }
+    })
+    .catch((err) => {
+      ctx.body = {
+        success: false,
+        code: 500,
+        message: '获取指定用户的权限失败！',
+        err: err.message,
+      }
+    })
+}
+
 // 获取feature列表
 const getFeature = async (ctx) => {
   await Feature.find().then(async (feature) => {
@@ -266,4 +301,5 @@ module.exports = {
   getFeature,
   getChapter,
   getUserList,
+  getUserPermission,
 }

@@ -43,6 +43,14 @@ const permissionSchema = new mongoose.Schema({
   permissionName: String,
   permissionMark: String,
   permissionDesc: String,
+  children: [
+    {
+      id: String,
+      permissionName: String,
+      permissionMark: String,
+      permissionDesc: String,
+    },
+  ],
 })
 const Permission = mongoose.model(
   'Permissionl',
@@ -56,7 +64,7 @@ const userPermissionSchema = new mongoose.Schema({
     type: [{ type: String }],
     select: false,
   },
-  id: Number,
+  id: String,
   data: [{ type: String }],
 })
 const UserPermission = mongoose.model(
