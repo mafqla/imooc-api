@@ -5,6 +5,7 @@ const {
   getArticleDetail,
   editArticle,
   createAcrticle,
+  deleteArticle,
 } = require('../controller/article.controller')
 
 const router = new Router()
@@ -19,5 +20,8 @@ router.get('/article/:id', getArticleDetail)
 router.post('/article/edit', editArticle)
 // 创建文章
 router.post('/article/create', createAcrticle)
+
+// 删除文章
+router.get('/article/delete/:id', deleteArticle)
 
 module.exports = router

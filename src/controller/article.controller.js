@@ -114,9 +114,35 @@ const createAcrticle = async (ctx) => {
       console.log(err)
     })
 }
+
+// 删除文章
+const deleteArticle = async (ctx) => {
+  const { id } = ctx.params
+  const OId = mongoose.Types.ObjectId(id)
+  await Article.deleteOne({ _id: OId })
+    .then((result) => {
+      ctx.body = {
+        success: true,
+        code: 200,
+        data: result.deletedCount,
+        message: '删除文章成功！',
+      }
+    })
+    .catch((err) => {
+      ctx.body = {
+        success: false,
+        code: 500,
+        data: err,
+        message: '删除文章失败！',
+      }
+    })
+}
+
+
 module.exports = {
   getArticleList,
   getArticleDetail,
   editArticle,
   createAcrticle,
+  deleteArticle,
 }
