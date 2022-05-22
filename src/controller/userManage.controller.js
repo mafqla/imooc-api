@@ -87,7 +87,47 @@ const getUserList = async (ctx) => {
   }
 }
 
+// 获取所有员工列表
+const getAllUserList = async (ctx) => {
+  const listResult = await User.find()
+  console.log(listResult)
+  const role = []
+  const roleId = []
+  for (let i in listResult) {
+    const Id = listResult[i].roleId
+    // console.log(Id)
+    roleId.push(Id)
+  }
+  for (let j in roleId) {
+    const roleData = await Role.findOne({ id: roleId[j] })
+    role.push({ id: roleData.id, title: roleData.title })
+  }
+  console.log(role)
+  const list = []
+  for (let i in listResult) {
+    list.push({
+      role: new Array(role[i]),
+      _id: listResult[i]._id,
+      id: listResult[i].id,
+      username: listResult[i].username,
+      openTime: listResult[i].openTime,
+      mobile: listResult[i].mobile,
+      avatar: listResult[i].avatar,
+    })
+  }
+
+  ctx.body = {
+    success: true,
+    code: 200,
+    data: {
+      list: list,
+    },
+    message: '获取所有员工列表成功',
+  }
+}
+
 module.exports = {
   register,
   getUserList,
+  getAllUserList,
 }
