@@ -1,6 +1,7 @@
-const { User, Role } = require('../model/index')
+const { User, Role, UserPermission } = require('../model/index')
 // 导入 bcryptjs 这个包
 const bcrypt = require('bcryptjs')
+const mongoose = require('mongoose')
 
 const register = async (ctx) => {
   let { username, password } = ctx.request.body
@@ -102,7 +103,6 @@ const getAllUserList = async (ctx) => {
     const roleData = await Role.findOne({ id: roleId[j] })
     role.push({ id: roleData.id, title: roleData.title })
   }
-  console.log(role)
   const list = []
   for (let i in listResult) {
     list.push({
@@ -126,8 +126,34 @@ const getAllUserList = async (ctx) => {
   }
 }
 
+// 获取指定员工当前角色
+const getUserRole = async (ctx) => {
+  const { id } = ctx.params
+  const OId = mongoose.Types.ObjectId(id)
+  const roleId = await User.findOne({ _id: OId })
+  const roleData = await Role.findOne({ id: roleId.roleId })
+  const permission = await UserPermission.findOne({ id: roleId.roleId })
+
+  const role = []
+  role.push({
+    id: roleData.id,
+    title: roleData.title,
+    describe: roleData.describe,
+    permission: permission.data,
+  })
+  ctx.body = {
+    success: true,
+    code: 200,
+    data: {
+      role: role,
+    },
+    message: '获取指定员工当前角色成功',
+  }
+}
+
 module.exports = {
   register,
   getUserList,
   getAllUserList,
+  getUserRole,
 }
