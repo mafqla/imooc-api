@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const userSchema = new mongoose.Schema(
   {
     id: String,
-    roleId: String,
+    roleId: [{ type: String }],
     openTime: String,
     username: String,
     password: {

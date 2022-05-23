@@ -91,22 +91,31 @@ const getUserList = async (ctx) => {
 // 获取所有员工列表
 const getAllUserList = async (ctx) => {
   const listResult = await User.find()
-  console.log(listResult)
-  const role = []
+  // console.log(listResult)
+  const role = new Map()
   const roleId = []
   for (let i in listResult) {
     const Id = listResult[i].roleId
     // console.log(Id)
     roleId.push(Id)
   }
+  console.log(roleId)
   for (let j in roleId) {
-    const roleData = await Role.findOne({ id: roleId[j] })
-    role.push({ id: roleData.id, title: roleData.title })
+    console.log(roleId[j])
+    const data = []
+    for (let k in roleId[j]) {
+      const roleData = await Role.findOne({ id: roleId[j][k] })
+      data.push({ id: roleData.id, title: roleData.title })
+    }
+    // console.log(data)
+    role.set(j, data)
   }
+  console.log(role)
+
   const list = []
   for (let i in listResult) {
     list.push({
-      role: new Array(role[i]),
+      role: role.get(i),
       _id: listResult[i]._id,
       id: listResult[i].id,
       username: listResult[i].username,
@@ -130,17 +139,13 @@ const getAllUserList = async (ctx) => {
 const getUserRole = async (ctx) => {
   const { id } = ctx.params
   const OId = mongoose.Types.ObjectId(id)
-  const roleId = await User.findOne({ _id: OId })
-  const roleData = await Role.findOne({ id: roleId.roleId })
-  const permission = await UserPermission.findOne({ id: roleId.roleId })
-
+  const roleIdlist = await User.findOne({ _id: OId })
   const role = []
-  role.push({
-    id: roleData.id,
-    title: roleData.title,
-    describe: roleData.describe,
-    permission: permission.data,
-  })
+  for (let i in roleIdlist.roleId) {
+    const roleData = await Role.findOne({ id: roleIdlist.roleId[i] })
+    role.push(roleData)
+  }
+  // console.log(role)
   ctx.body = {
     success: true,
     code: 200,
@@ -151,9 +156,49 @@ const getUserRole = async (ctx) => {
   }
 }
 
+// 更新用户角色
+const updateUserRole = async (ctx) => {
+  const { userId } = ctx.request.params
+  const roles = ctx.request.body.roles
+  const OId = mongoose.Types.ObjectId(userId)
+  const role = []
+  for (let i in roles) {
+    role.push(roles[i].id)
+  }
+
+  for (let i in role) {
+    if (role[i] === '1' || role[i] === '2') {
+      return (ctx.body = {
+        success: false,
+        code: 200,
+        message: '[超级管理员、管理员]角色不能被修改！',
+      })
+    }
+  }
+
+  await User.updateOne({ _id: OId }, { $set: { roleId: role } })
+    .then(async (result) => {
+      ctx.body = {
+        success: true,
+        code: 200,
+        data: role,
+        message: '更新用户角色成功',
+      }
+    })
+    .catch((err) => {
+      ctx.body = {
+        success: false,
+        code: 500,
+        message: '更新用户角色失败',
+        err: err.message,
+      }
+    })
+}
+
 module.exports = {
   register,
   getUserList,
   getAllUserList,
   getUserRole,
+  updateUserRole,
 }

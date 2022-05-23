@@ -5,6 +5,7 @@ const {
   getUserList,
   getAllUserList,
   getUserRole,
+  updateUserRole,
 } = require('../controller/userManage.controller')
 
 const router = new Router()
@@ -20,5 +21,8 @@ router.get('/user-manage/all-list', getAllUserList)
 
 // 获取指定员工当前角色
 router.get('/user-manage/role/:id', getUserRole)
+
+// 更新用户角色
+router.post('/user-manage/update-role/:userId', updateUserRole)
 
 module.exports = router
