@@ -54,19 +54,30 @@ const getUserList = async (ctx) => {
     .skip((page - 1) * size)
 
   // console.log(listResult)
+  const role = new Map()
+  const roleId = []
+  for (let i in listResult) {
+    const Id = listResult[i].roleId
+    // console.log(Id)
+    roleId.push(Id)
+  }
+  // console.log(roleId)
+  for (let j in roleId) {
+    // console.log(roleId[j])
+    const data = []
+    for (let k in roleId[j]) {
+      const roleData = await Role.findOne({ id: roleId[j][k] })
+      data.push({ id: roleData.id, title: roleData.title })
+    }
+    // console.log(data)
+    role.set(j, data)
+  }
+  // console.log(role)
+
   const list = []
   for (let i in listResult) {
-    const roleId = listResult[i].roleId
-    const roleData = await Role.find()
-    // console.log(roleData)
-    const role = []
-    for (let j in roleData) {
-      if (roleData[j].id === roleId) {
-        role.push({ id: roleData[j].id, title: roleData[j].title })
-      }
-    }
     list.push({
-      role: role,
+      role: role.get(i),
       _id: listResult[i]._id,
       id: listResult[i].id,
       username: listResult[i].username,
@@ -99,9 +110,9 @@ const getAllUserList = async (ctx) => {
     // console.log(Id)
     roleId.push(Id)
   }
-  console.log(roleId)
+  // console.log(roleId)
   for (let j in roleId) {
-    console.log(roleId[j])
+    // console.log(roleId[j])
     const data = []
     for (let k in roleId[j]) {
       const roleData = await Role.findOne({ id: roleId[j][k] })
@@ -110,7 +121,7 @@ const getAllUserList = async (ctx) => {
     // console.log(data)
     role.set(j, data)
   }
-  console.log(role)
+  // console.log(role)
 
   const list = []
   for (let i in listResult) {
@@ -124,7 +135,6 @@ const getAllUserList = async (ctx) => {
       avatar: listResult[i].avatar,
     })
   }
-
   ctx.body = {
     success: true,
     code: 200,
@@ -194,6 +204,8 @@ const updateUserRole = async (ctx) => {
       }
     })
 }
+
+
 
 module.exports = {
   register,
