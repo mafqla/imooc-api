@@ -35,6 +35,6 @@ router.get('/user-manage/detail/:id', getUserInfoById)
 router.post('/user-manage/batch/import', addUserByExcel)
 
 // 删除员工
-router.get('/user-manage/delete/:id', deleteUser)
+router.get('/user-manage/detele/:id', deleteUser)
 
 module.exports = router

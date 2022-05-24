@@ -6,7 +6,11 @@ const datatime = new Date().getTime()
 // 用户信息
 const userSchema = new mongoose.Schema(
   {
-    id: String,
+    id: {
+      type: String,
+      unique: true,
+      default: mongoose.Types.ObjectId,
+    },
     roleId: [{ type: String }],
     openTime: { type: String, default: datatime },
     username: String,
@@ -120,6 +124,35 @@ const articleSchema = new mongoose.Schema({
 
 const Article = mongoose.model('Article', articleSchema, 'article')
 
+// 员工信息表
+const employeeSchema = new mongoose.Schema({
+  id: String,
+  remark: [String],
+  experience: [Object],
+  gender: {
+    type: String,
+    default: null,
+  },
+  nationality: {
+    type: String,
+    default: null,
+  },
+  address: {
+    type: String,
+    default: null,
+  },
+  major: {
+    type: String,
+    default: null,
+  },
+  glory: {
+    type: String,
+    default: null,
+  },
+})
+
+const Manage = mongoose.model('Employee', employeeSchema, 'manageinfo')
+
 module.exports = {
   User,
   Role,
@@ -128,4 +161,5 @@ module.exports = {
   Feature,
   Chapter,
   Article,
+  Manage,
 }

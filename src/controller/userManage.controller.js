@@ -1,4 +1,4 @@
-const { User, Role, UserPermission } = require('../model/index')
+const { User, Role, Manage } = require('../model/index')
 // 导入 bcryptjs 这个包
 const bcrypt = require('bcryptjs')
 const mongoose = require('mongoose')
@@ -206,7 +206,45 @@ const updateUserRole = async (ctx) => {
 }
 
 // 获取指定员工信息
-const getUserInfoById = async (ctx) => {}
+const getUserInfoById = async (ctx) => {
+  const { id } = ctx.params
+  const OId = mongoose.Types.ObjectId(id)
+  const userInfo = await User.findOne({ _id: OId })
+  const role = []
+  const roleData = await Role.findOne({ id: userInfo.roleId })
+  role.push({ id: roleData.id, title: roleData.title })
+  const manageinfo = await Manage.findOne({ id: userInfo.id })
+  if (userInfo) {
+    ctx.body = {
+      success: true,
+      code: 200,
+      data: {
+        role: role,
+        remark: manageinfo.remark,
+        experience: manageinfo.experience,
+        _id: userInfo._id,
+        id: userInfo.id,
+        openTime: userInfo.openTime,
+        username: userInfo.username,
+        title: roleData.title,
+        mobile: userInfo.mobile,
+        avatar: userInfo.avatar,
+        gender: manageinfo.gender,
+        nationality: manageinfo.nationality,
+        address: manageinfo.address,
+        major: manageinfo.major,
+        glory: manageinfo.glory,
+      },
+      message: '获取指定员工信息成功',
+    }
+  } else {
+    ctx.body = {
+      success: false,
+      code: 500,
+      message: '获取指定员工信息失败',
+    }
+  }
+}
 
 // 添加员工(通过excel导入)
 const addUserByExcel = async (ctx) => {
@@ -216,7 +254,7 @@ const addUserByExcel = async (ctx) => {
     const roleId = []
     const result = await Role.findOne({ title: body[i].role })
     roleId.push(result.id)
-    console.log(roleId)
+    // console.log(roleId)
     const user = new User({
       id: body[i].id,
       roleId: roleId,
@@ -227,22 +265,58 @@ const addUserByExcel = async (ctx) => {
       avatar: body[i].avatar,
     })
 
-    console.log(user)
-    await user.save()
-      .then(async (result) => {
+    // console.log(user)
+    await user.save().then(async (result) => {
+      const manage = new Manage({
+        id: result.id,
+      })
+      await manage.save().then(async (result) => {
+
         ctx.body = {
           success: true,
           code: 200,
-          data:null,
+          data: null,
           message: '添加员工成功',
         }
       })
+    })
   }
 }
 
 // 删除员工
-const deleteUser = async (ctx) => {}
+const deleteUser = async (ctx) => {
+  const { id } = ctx.params
+  // console.log(id)
+  const OId = mongoose.Types.ObjectId(id)
+  const userRoleId = await User.findOne({ _id: OId }).select('roleId')
+  // console.log(userRoleId)
 
+  if (userRoleId.roleId.includes('1') || userRoleId.roleId.includes('2')) {
+    return (ctx.body = {
+      success: false,
+      code: 200,
+      message: '超级管理员、管理员角色不能被删除！',
+    })
+  }
+
+  await User.deleteOne({ _id: OId })
+    .then(async (result) => {
+      ctx.body = {
+        success: true,
+        code: 200,
+        data: null,
+        message: '删除员工成功',
+      }
+    })
+    .catch((err) => {
+      ctx.body = {
+        success: false,
+        code: 500,
+        message: '删除员工失败',
+        err: err.message,
+      }
+    })
+}
 module.exports = {
   register,
   getUserList,
