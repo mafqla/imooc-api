@@ -6,6 +6,9 @@ const {
   getAllUserList,
   getUserRole,
   updateUserRole,
+  getUserInfoById,
+  addUserByExcel,
+  deleteUser,
 } = require('../controller/userManage.controller')
 
 const router = new Router()
@@ -24,5 +27,14 @@ router.get('/user-manage/role/:id', getUserRole)
 
 // 更新用户角色
 router.post('/user-manage/update-role/:userId', updateUserRole)
+
+// 获取指定员工信息
+router.get('/user-manage/detail/:id', getUserInfoById)
+
+// 增加员工
+router.post('/user-manage/batch/import', addUserByExcel)
+
+// 删除员工
+router.get('/user-manage/delete/:id', deleteUser)
 
 module.exports = router

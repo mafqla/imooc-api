@@ -205,7 +205,43 @@ const updateUserRole = async (ctx) => {
     })
 }
 
+// 获取指定员工信息
+const getUserInfoById = async (ctx) => {}
 
+// 添加员工(通过excel导入)
+const addUserByExcel = async (ctx) => {
+  const body = ctx.request.body
+  // console.log(body)
+  for (let i in body) {
+    const roleId = []
+    const result = await Role.findOne({ title: body[i].role })
+    roleId.push(result.id)
+    console.log(roleId)
+    const user = new User({
+      id: body[i].id,
+      roleId: roleId,
+      username: body[i].username,
+      password: body[i].password,
+      openTime: Date.parse(body[i].openTime),
+      mobile: body[i].mobile,
+      avatar: body[i].avatar,
+    })
+
+    console.log(user)
+    await user.save()
+      .then(async (result) => {
+        ctx.body = {
+          success: true,
+          code: 200,
+          data:null,
+          message: '添加员工成功',
+        }
+      })
+  }
+}
+
+// 删除员工
+const deleteUser = async (ctx) => {}
 
 module.exports = {
   register,
@@ -213,4 +249,7 @@ module.exports = {
   getAllUserList,
   getUserRole,
   updateUserRole,
+  getUserInfoById,
+  addUserByExcel,
+  deleteUser,
 }

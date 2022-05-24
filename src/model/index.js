@@ -1,17 +1,25 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
+const password = bcrypt.hashSync('123456', 10)
 
+const datatime = new Date().getTime()
 // 用户信息
 const userSchema = new mongoose.Schema(
   {
     id: String,
     roleId: [{ type: String }],
-    openTime: String,
+    openTime: { type: String, default: datatime },
     username: String,
     password: {
       type: String,
+      default: password,
     },
     mobile: String,
-    avatar: String,
+    avatar: {
+      type: String,
+      default:
+        'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    },
   },
   { versionKey: false },
 )
