@@ -1,0 +1,169 @@
+[{
+  "_id": {
+    "$oid": "6280eba7dbde564bb0cb10dd"
+  },
+  "id": 1,
+  "title": "Vue3 + 全家桶",
+  "percentage": 100,
+  "content": "项目基于最新的<a target=\"_blank\" href=\"https://v3.cn.vuejs.org/guide/introduction.html\">vue3</a>全家桶进行开发，全面使用最新的的<a target=\"_blank\" href=\"https://github.com/vuejs/rfcs/blob/master/active-rfcs/0040-script-setup.md\">RFC script setup</a>语法标准，为你带来不一样的 vue3 开发体验"
+},{
+  "_id": {
+    "$oid": "6280ecc2810bb0895c0a5330"
+  },
+  "id": 2,
+  "title": "Element-Plus",
+  "percentage": 100,
+  "content": "<a target=\"_blank\" href=\"https://element-plus.org/#/zh-CN\">Element Plus</a>，一套为开发者、设计师和产品经理准备的基于 Vue 3.0 的桌面端组件库。是 Element UI 的官方 vue 3 兼容版本"
+},{
+  "_id": {
+    "$oid": "6280ecc5810bb0895c0a5331"
+  },
+  "id": 3,
+  "title": "vue-element-admin",
+  "percentage": 100,
+  "content": "<a target=\"_blank\" href=\"https://panjiachen.github.io/vue-element-admin-site/zh/guide/\">vue-element-admin</a> 是一个后台前端解决方案，它基于 vue 和 element-ui实现，并有用 70K 的 <a target=\"_blank\" href=\"https://github.com/PanJiaChen/vue-element-admin\">star</a>。<br />本项目使用最新 vue 技术对其进行了重构，并在其现有功能上进行了扩展，致力于为大家带来更加符合 <b>现代后台开发的前端技术解决方案</b>"
+},{
+  "_id": {
+    "$oid": "6280ecc7810bb0895c0a5332"
+  },
+  "id": 4,
+  "title": "ESLint + Git Hooks",
+  "percentage": 100,
+  "content": "ESLint 对应编码规范，Git Hooks 对应 Git 规范。<br /> 想要开发出大厂标准的企业级项目，需要先从规范做起！"
+},{
+  "_id": {
+    "$oid": "6280ecca810bb0895c0a5333"
+  },
+  "id": 5,
+  "title": "架构设计",
+  "percentage": 100,
+  "content": "阿里前端 P7 岗被称为 《技术专家》，也有人喜欢叫他们为 “前端架构师”，既然被称为 “架构师” ，那么架构设计当然是不可缺少的一环咯"
+},{
+  "_id": {
+    "$oid": "6280eccc810bb0895c0a5334"
+  },
+  "id": 6,
+  "title": "权限验证（页面权限、功能权限、动态权限、权限配置）",
+  "percentage": 100,
+  "content": "全面的后台权限验证系统，实现了 <b>页面权限、功能权限、动态权限、权限配置</b> 等全方位的权限功能"
+},{
+  "_id": {
+    "$oid": "6280ecce810bb0895c0a5335"
+  },
+  "id": 7,
+  "title": "功能引导",
+  "percentage": 100,
+  "content": "对用户的功能引导"
+},{
+  "_id": {
+    "$oid": "6280ecd0810bb0895c0a5336"
+  },
+  "id": 8,
+  "title": "可配置 + 收缩侧边栏",
+  "percentage": 100,
+  "content": "根据路由动态生成的 Menu 菜单，实现真正的 <b>配置 Menu</b>"
+},{
+  "_id": {
+    "$oid": "6280ecd2810bb0895c0a5337"
+  },
+  "id": 9,
+  "title": "动态面包屑",
+  "percentage": 100,
+  "content": "动态生成的面包屑数据"
+},{
+  "_id": {
+    "$oid": "6280ecd5810bb0895c0a5338"
+  },
+  "id": 10,
+  "title": "Tags View",
+  "percentage": 100,
+  "content": "便签快捷导航功能"
+},{
+  "_id": {
+    "$oid": "6280eceb810bb0895c0a5339"
+  },
+  "id": 11,
+  "title": "svg sprite 图标",
+  "percentage": 100,
+  "content": "自定义的 svg Icon 配合 el Icon 自动分配导入"
+},{
+  "_id": {
+    "$oid": "6280ecee810bb0895c0a533a"
+  },
+  "id": 12,
+  "title": "国际化",
+  "percentage": 100,
+  "content": "多语言的国际化功能实现"
+},{
+  "_id": {
+    "$oid": "6280ecf1810bb0895c0a533b"
+  },
+  "id": 13,
+  "title": "动态换肤",
+  "percentage": 100,
+  "content": "主题更换功能，提供缓存实现"
+},{
+  "_id": {
+    "$oid": "6280ecf3810bb0895c0a533c"
+  },
+  "id": 14,
+  "title": "页面搜索",
+  "percentage": 100,
+  "content": "根据路由配置自动化生成的页面搜索数据，无需手动配置"
+},{
+  "_id": {
+    "$oid": "6280ecf5810bb0895c0a533d"
+  },
+  "id": 15,
+  "title": "excel 导出、导入",
+  "percentage": 100,
+  "content": "excel 表格的导入、导出实现"
+},{
+  "_id": {
+    "$oid": "6280ecf7810bb0895c0a533e"
+  },
+  "id": 16,
+  "title": "zip 导入",
+  "percentage": 100,
+  "content": "页面数据导出为 zip"
+},{
+  "_id": {
+    "$oid": "6280ecfa810bb0895c0a533f"
+  },
+  "id": 17,
+  "title": "富文本 + MarkDown 编辑器",
+  "percentage": 100,
+  "content": "常用的编辑器功能，包含 富文本编辑器 && MarkDown 编辑器"
+},{
+  "_id": {
+    "$oid": "6280ecfd810bb0895c0a5340"
+  },
+  "id": 18,
+  "title": "动态表格 + 拖拽表格 + 内联编辑表格",
+  "percentage": 100,
+  "content": "表格列表的常见操作，多用于包含表格项的展示功能中。包括：动态表格 && 拖拽表格 && 内联编辑表格"
+},{
+  "_id": {
+    "$oid": "6280ecff810bb0895c0a5341"
+  },
+  "id": 19,
+  "title": "统一错误处理",
+  "percentage": 100,
+  "content": "页面级的错误处理由 vue-router 统一处理。包含 401 和 404 的错误处理"
+},{
+  "_id": {
+    "$oid": "6280ed02810bb0895c0a5342"
+  },
+  "id": 20,
+  "title": "发布",
+  "percentage": 100,
+  "content": "构建与发布"
+},{
+  "_id": {
+    "$oid": "6280f04e810bb0895c0a5343"
+  },
+  "id": 21,
+  "title": "其他",
+  "percentage": 100,
+  "content": "除了以上功能之外，我们还实现了很多其他的功能，比如：CDN、动态的环境变量配置、懒加载、跨域等等"
+}]

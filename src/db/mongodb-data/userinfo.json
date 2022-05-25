@@ -1,0 +1,79 @@
+[{
+  "_id": {
+    "$oid": "6280fdb9dbde564bb0cb10e4"
+  },
+  "id": "612710a9ec87aa543c9c3420",
+  "roleId": [
+    "1"
+  ],
+  "username": "super-admin",
+  "password": "$2a$10$wjjz4orHj2B5hBSaRqDFLuXOOuU9.yV3ZoX/CO5buZS9yZY4V8Zua",
+  "openTime": "1433088000000",
+  "mobile": "188xxxx0001",
+  "avatar": "https://ss0.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3156449958,1658057091&fm=26&gp=0.jpg"
+},{
+  "_id": {
+    "$oid": "6280fdd7810bb0895c0a5359"
+  },
+  "id": "612710a9ec87aa543c9c3421",
+  "roleId": [
+    "2"
+  ],
+  "username": "admin",
+  "password": "$2a$10$wjjz4orHj2B5hBSaRqDFLuXOOuU9.yV3ZoX/CO5buZS9yZY4V8Zua",
+  "openTime": "1559318400000",
+  "mobile": "188xxxx0002",
+  "avatar": "https://img4.sycdn.imooc.com/61110c2b0001152907400741-140-140.jpg"
+},{
+  "_id": {
+    "$oid": "628ce7229ff9753714369992"
+  },
+  "id": "628ce7229ff9753714369993",
+  "roleId": [
+    "2"
+  ],
+  "openTime": "1628726400000",
+  "username": "刘备",
+  "password": "$2a$10$vE0/.6CJmuX1JpBm2L4V6.NSGdB9LDQ1YAYXRfapFkBfl8E89XaAq",
+  "mobile": "15500000400",
+  "avatar": "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
+},{
+  "_id": {
+    "$oid": "628ce7229ff9753714369998"
+  },
+  "id": "628ce7229ff9753714369999",
+  "roleId": [
+    "3"
+  ],
+  "openTime": "1632096000000",
+  "username": "关羽",
+  "password": "$2a$10$vE0/.6CJmuX1JpBm2L4V6.NSGdB9LDQ1YAYXRfapFkBfl8E89XaAq",
+  "mobile": "15511211111",
+  "avatar": "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
+},{
+  "_id": {
+    "$oid": "628ce7229ff975371436999e"
+  },
+  "id": "628ce7229ff975371436999f",
+  "roleId": [
+    "4"
+  ],
+  "openTime": "1632528000000",
+  "username": "张飞",
+  "password": "$2a$10$vE0/.6CJmuX1JpBm2L4V6.NSGdB9LDQ1YAYXRfapFkBfl8E89XaAq",
+  "mobile": "15522422222",
+  "avatar": "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
+},{
+  "_id": {
+    "$oid": "628ce7229ff97537143699a4"
+  },
+  "id": "628ce7229ff97537143699a5",
+  "roleId": [
+    "5"
+  ],
+  "openTime": "1635724800000",
+  "username": "赵云",
+  "password": "$2a$10$vE0/.6CJmuX1JpBm2L4V6.NSGdB9LDQ1YAYXRfapFkBfl8E89XaAq",
+  "mobile": "15533353333",
+  "avatar": "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
+}]

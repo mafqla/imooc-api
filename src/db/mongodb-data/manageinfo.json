@@ -1,0 +1,108 @@
+[{
+  "_id": {
+    "$oid": "628cd1ef3e7bdbbc6edecb74"
+  },
+  "id": "612710a9ec87aa543c9c3420",
+  "remark": [
+    "超级管理员",
+    "BOSS"
+  ],
+  "experience": [
+    {
+      "startTime": "1538323200000",
+      "endTime": "1551369600000",
+      "title": "慕课网",
+      "desc": "混合开发京东商城"
+    },
+    {
+      "startTime": "1614528000000",
+      "endTime": "1625068800000",
+      "title": "慕课网",
+      "desc": "uni-app 开发企业级小程序"
+    }
+  ],
+  "gender": "男",
+  "nationality": "汉",
+  "address": "北京市朝阳区xx大道 11xx0 号 3 层",
+  "major": "在线职业教育平台",
+  "glory": "国内领先的线上 IT 教育品牌"
+},{
+  "_id": {
+    "$oid": "628ce7229ff9753714369995"
+  },
+  "id": "628ce7229ff9753714369993",
+  "remark": [],
+  "experience": [],
+  "gender": null,
+  "nationality": null,
+  "address": null,
+  "major": null,
+  "glory": null,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "628ce7229ff975371436999b"
+  },
+  "id": "628ce7229ff9753714369999",
+  "remark": [],
+  "experience": [],
+  "gender": null,
+  "nationality": null,
+  "address": null,
+  "major": null,
+  "glory": null,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "628ce7229ff97537143699a1"
+  },
+  "id": "628ce7229ff975371436999f",
+  "remark": [],
+  "experience": [],
+  "gender": null,
+  "nationality": null,
+  "address": null,
+  "major": null,
+  "glory": null,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "628ce7229ff97537143699a7"
+  },
+  "id": "628ce7229ff97537143699a5",
+  "remark": [],
+  "experience": [],
+  "gender": null,
+  "nationality": null,
+  "address": null,
+  "major": null,
+  "glory": null,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "628ce7cd632d5802415eab71"
+  },
+  "id": "612710a9ec87aa543c9c3421",
+  "remark": [
+    "管理员"
+  ],
+  "experience": [
+    {
+      "startTime": "1538323200000",
+      "endTime": "1551369600000",
+      "title": "慕课网",
+      "desc": "混合开发京东商城"
+    },
+    {
+      "startTime": "1614528000000",
+      "endTime": "1625068800000",
+      "title": "慕课网",
+      "desc": "uni-app 开发企业级小程序"
+    }
+  ],
+  "gender": "男",
+  "nationality": "汉",
+  "address": "北京市朝阳区xx大道 11xx0 号 3 层",
+  "major": "在线职业教育平台",
+  "glory": "国内领先的线上 IT 教育品牌"
+}]
