@@ -7,19 +7,19 @@ const {
   Permission,
   UserPermission,
   Feature,
-  Chapter,
+  Chapter
 } = require('../model/index')
 
-const login = async (ctx) => {
+const login = async ctx => {
   const { username, password } = ctx.request.body
 
   await User.findOne({ username })
-    .then(async (result) => {
+    .then(async result => {
       if (!result) {
         ctx.body = {
           success: false,
           code: 300,
-          message: '用户不存在',
+          message: '用户不存在'
         }
       } else {
         // console.log(result.username)
@@ -29,41 +29,45 @@ const login = async (ctx) => {
         if (isPasswordValid) {
           const token = jwt.sign(
             { username: result.username, id: result.id },
-            'imooc-api',
+            'imooc-api'
           )
           ctx.body = {
             success: true,
             code: 200,
             data: {
-              token: token,
+              token: token
             },
-            message: '登录成功',
+            message: '登录成功'
           }
         } else {
           ctx.body = {
             success: false,
             code: 300,
-            message: '密码错误',
+            message: '密码错误'
           }
         }
       }
     })
-    .catch((err) => {
+    .catch(err => {
       ctx.body = {
         success: false,
         code: 500,
         message: '登录出现异常',
-        err: err.message,
+        err: err.message
       }
     })
 }
 
 //获取用户信息
-const profile = async (ctx) => {
-  await User.findOne().then(async (result) => {
-    // console.log(result)
-    const roleId = result.roleId
-    await Role.findOne({ roleId }).then(async (role) => {
+const profile = async ctx => {
+  //从token中获取用户id
+  const { id } = ctx.state.user
+  await User.findOne({ id }).then(async result => {
+    const roleIdArr = result.roleId
+    // 获取数组中的值并返回
+    const roleId = roleIdArr[0]
+    await Role.findOne({id: roleId }).then(async role => {
+      // console.log(role)
       const userPermission = await UserPermission.findOne({ id: role.id })
       let permissionid = userPermission.data
       // console.log(permissionid)
@@ -110,7 +114,7 @@ const profile = async (ctx) => {
         data: {
           role: {
             id: role.id,
-            title: role.title,
+            title: role.title
           },
           _id: result._id,
           id: result.id,
@@ -119,39 +123,39 @@ const profile = async (ctx) => {
           avatar: result.avatar,
           permission: {
             menus,
-            points,
-          },
+            points
+          }
         },
-        message: '获取用户信息成功！',
+        message: '获取用户信息成功！'
       }
     })
   })
 }
 
 // 获取feature列表
-const getFeature = async (ctx) => {
-  await Feature.find().then(async (feature) => {
+const getFeature = async ctx => {
+  await Feature.find().then(async feature => {
     // console.log(feature)
     const data = feature
     ctx.body = {
       success: true,
       code: 200,
       data,
-      message: '获取feature列表成功！',
+      message: '获取feature列表成功！'
     }
   })
 }
 
 // 获取chapter列表
-const getChapter = async (ctx) => {
-  await Chapter.find().then(async (chapter) => {
+const getChapter = async ctx => {
+  await Chapter.find().then(async chapter => {
     // console.log(chapter)
     const data = chapter
     ctx.body = {
       success: true,
       code: 200,
       data,
-      message: '获取chapter列表成功！',
+      message: '获取chapter列表成功！'
     }
   })
 }
@@ -160,5 +164,5 @@ module.exports = {
   login,
   profile,
   getFeature,
-  getChapter,
+  getChapter
 }
